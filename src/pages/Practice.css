@@ -1,0 +1,60 @@
+.practice-not-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-4);
+  padding: var(--sp-8);
+}
+
+.practice-header-content {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  min-width: 0;
+}
+
+.practice-back {
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+  font-size: var(--text-base);
+}
+
+.practice-topic-info {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  min-width: 0;
+}
+
+.practice-topic-name {
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Empty state */
+.practice-empty-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-3);
+}
+
+.practice-formula {
+  display: flex;
+  justify-content: center;
+}
+
+.formula-code {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--accent);
+  background: var(--accent-subtle);
+  padding: var(--sp-2) var(--sp-4);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--accent-border);
+  text-align: center;
+}

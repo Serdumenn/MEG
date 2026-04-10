@@ -1,0 +1,237 @@
+.home-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-6);
+  padding-bottom: var(--sp-4);
+}
+
+/* ── Header ── */
+.home-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--sp-4);
+}
+
+.home-title {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.home-level-badge {
+  font-size: var(--text-base);
+  padding: var(--sp-2) var(--sp-3);
+  flex-shrink: 0;
+}
+
+/* ── Stats row ── */
+.home-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-3);
+}
+
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-1);
+  padding: var(--sp-4) var(--sp-2);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.stat-value {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 10px;
+  color: var(--text-tertiary);
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+
+/* ── Quick actions ── */
+.home-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+.action-card {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  padding: var(--sp-4) var(--sp-5);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  text-decoration: none;
+  color: inherit;
+  transition: all var(--t-fast);
+}
+
+.action-card:hover {
+  border-color: var(--accent-border);
+  background: var(--bg-hover);
+  text-decoration: none;
+  color: inherit;
+}
+
+.action-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  background: var(--accent-subtle);
+  border: 1px solid var(--accent-border);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.action-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.action-title {
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.action-desc {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+}
+
+.action-card svg:last-child {
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+}
+
+/* ── Section heading ── */
+.home-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+/* ── Recent topics ── */
+.recent-topics {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: var(--sp-3);
+}
+
+.recent-topic-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  transition: all var(--t-fast);
+}
+
+.recent-topic-card:hover {
+  border-color: var(--accent-border);
+  background: var(--bg-hover);
+  text-decoration: none;
+}
+
+.recent-topic-top {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+.recent-topic-name {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+.critical-pill {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--warning);
+  background: rgba(251, 191, 36, 0.1);
+  border: 1px solid rgba(251, 191, 36, 0.25);
+  border-radius: var(--radius-full);
+  padding: 1px 6px;
+  letter-spacing: 0.02em;
+}
+
+/* ── Highlight cards (Geçen Sefer, Önerilen, Fiil) ── */
+.highlight-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  padding: var(--sp-4) var(--sp-5);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  color: inherit;
+  transition: all var(--t-fast);
+}
+
+.highlight-card:hover {
+  border-color: var(--accent-border);
+  background: var(--bg-hover);
+  text-decoration: none;
+  color: inherit;
+}
+
+.highlight-card-left {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
+  min-width: 0;
+}
+
+.highlight-card-name {
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.highlight-card-sub {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+}
+
+.highlight-card-cta {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--accent);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ── Tip ── */
+.home-tip {
+  padding: var(--sp-4);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-lg);
+}

@@ -1,0 +1,192 @@
+.verbs-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+  padding-bottom: var(--sp-8);
+}
+
+/* ── Header + Tab Switcher ── */
+.verbs-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+}
+
+.verbs-tab-switcher {
+  display: flex;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  padding: 3px;
+  gap: 2px;
+}
+
+.verbs-tab {
+  padding: var(--sp-2) var(--sp-4);
+  border-radius: var(--radius-full);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all var(--t-fast);
+  white-space: nowrap;
+}
+
+.verbs-tab.active {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* ── Filter pills ── */
+.verb-filters {
+  display: flex;
+  gap: var(--sp-2);
+}
+
+.verb-filter-pill {
+  padding: var(--sp-2) var(--sp-3);
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--t-fast);
+}
+
+.verb-filter-pill.active {
+  background: var(--accent-subtle);
+  border-color: var(--accent-border);
+  color: var(--accent);
+}
+
+/* ── Flashcard ── */
+.flashcard-mode {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+.flip-card {
+  height: 240px;
+  cursor: pointer;
+  perspective: 1000px;
+  user-select: none;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+}
+
+.flip-card.flipped .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  inset: 0;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-3);
+  padding: var(--sp-6);
+}
+
+.flip-card-back {
+  transform: rotateY(180deg);
+  gap: var(--sp-4);
+}
+
+.flip-card-label {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.flip-card-verb {
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+}
+
+.flip-card-hint {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+}
+
+.flip-card-badge {
+  position: absolute;
+  top: var(--sp-3);
+  right: var(--sp-3);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+}
+
+.flip-card-badge.weak {
+  background: var(--error-bg);
+  color: var(--error);
+  border: 1px solid var(--error-border);
+}
+
+.flip-back-row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  width: 100%;
+}
+
+.flip-back-label {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  min-width: 24px;
+}
+
+.flip-back-value {
+  font-size: var(--text-xl);
+  font-weight: 600;
+  color: var(--accent);
+  font-family: var(--font-mono);
+}
+
+.flip-back-divider {
+  width: 100%;
+  height: 1px;
+  background: var(--border);
+}
+
+.flip-back-tr {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+/* ── Buttons ── */
+.flashcard-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-4);
+}
+
+.flashcard-btn {
+  min-height: 52px;
+}
