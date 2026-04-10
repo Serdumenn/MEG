@@ -8,7 +8,8 @@
       "Bash(npm install:*)",
       "Read(//c/Users/fatih/AppData/Local/Temp/claude/C--Users-fatih-Desktop-MEG/86815708-5da1-48ad-b7f7-be5770a40701/tasks/**)",
       "Bash(npm list:*)",
-      "Bash(node -e ':*)"
+      "Bash(node -e ':*)",
+      "Bash(gh repo:*)"
     ]
   }
 }
