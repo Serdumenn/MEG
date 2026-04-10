@@ -1,7 +1,7 @@
 import { useState, useCallback, useRef } from 'react';
 
 const GEMINI_MODEL = 'gemini-2.0-flash-lite';
-const API_KEY      = import.meta.env.VITE_GEMINI_API_KEY;
+const API_KEY      = 'AIzaSyAMYl2gjpoV4SriGZ4Po4xVSgMF2bOQTQI';
 
 export function useGemini() {
   const [isStreaming, setIsStreaming] = useState(false);
