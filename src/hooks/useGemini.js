@@ -1,7 +1,7 @@
 import { useState, useCallback, useRef } from 'react';
 
 const GEMINI_MODEL = 'gemini-2.0-flash-lite';
-const API_KEY      = import.meta.env.VITE_GEMINI_API_KEY;
+const WORKER_URL   = import.meta.env.VITE_WORKER_URL;
 
 export function useGemini() {
   const [isStreaming, setIsStreaming] = useState(false);
@@ -15,8 +15,8 @@ export function useGemini() {
     onDone,
     onError,
   }) => {
-    if (!API_KEY) {
-      const err = { type: 'no_key', message: 'Gemini API anahtari eksik.' };
+    if (!WORKER_URL) {
+      const err = { type: 'no_key', message: 'Proxy URL yapılandırılmamış.' };
       setError(err);
       onError?.(err);
       return;
@@ -31,7 +31,7 @@ export function useGemini() {
       parts: [{ text: msg.content }],
     }));
 
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:streamGenerateContent?alt=sse&key=${API_KEY}`;
+    const url = WORKER_URL;
 
     try {
       const response = await fetch(url, {
@@ -39,6 +39,7 @@ export function useGemini() {
         signal: abortRef.current.signal,
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({
+          model: GEMINI_MODEL,
           contents,
           systemInstruction: { parts: [{ text: systemPrompt }] },
           generationConfig: { temperature: 0.7, maxOutputTokens: 1024 },
