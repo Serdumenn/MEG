@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef } from 'react';
 
-const GEMINI_MODEL = 'gemini-2.0-flash-lite';
+const GEMINI_MODEL = 'gemini-2.5-flash';
 const WORKER_URL   = import.meta.env.VITE_WORKER_URL;
 
 export function useGemini() {
