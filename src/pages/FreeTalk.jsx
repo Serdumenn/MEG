@@ -25,6 +25,8 @@ export default function FreeTalk() {
   const startTimeRef     = useRef(Date.now());
   const messageCountRef  = useRef(0);
   const errorCountRef    = useRef(0);
+  const hiddenAtRef      = useRef(null);  // timestamp when tab was hidden
+  const pausedMsRef      = useRef(0);     // total ms spent hidden
 
   // Load user data and build prompt
   useEffect(() => {
@@ -47,11 +49,27 @@ export default function FreeTalk() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Pause timer when tab is hidden
+  useEffect(() => {
+    function onVisibilityChange() {
+      if (document.hidden) {
+        hiddenAtRef.current = Date.now();
+      } else if (hiddenAtRef.current) {
+        pausedMsRef.current += Date.now() - hiddenAtRef.current;
+        hiddenAtRef.current = null;
+      }
+    }
+    document.addEventListener('visibilitychange', onVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', onVisibilityChange);
+  }, []);
+
   // End session on unmount
   useEffect(() => {
     return () => {
       if (sessionIdRef.current) {
-        const durationMin = Math.round((Date.now() - startTimeRef.current) / 60000);
+        const totalMs     = Date.now() - startTimeRef.current;
+        const activeMs    = totalMs - pausedMsRef.current;
+        const durationMin = Math.round(activeMs / 60000);
         if (durationMin > 0 || messageCountRef.current > 0) {
           firestore.endSession(sessionIdRef.current, {
             messageCount: messageCountRef.current,

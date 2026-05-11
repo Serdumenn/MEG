@@ -4,14 +4,23 @@ import { useVoice } from '../hooks/useVoice';
 import { showToast } from './Toast';
 import './ChatInterface.css';
 
+const MAX_INPUT_LENGTH = 2000;
+
 // ── Markdown + correction renderer ───────────────────────────
 function renderMarkdown(text) {
-  return text
+  // Escape HTML entities first to prevent XSS
+  const escaped = text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+
+  return escaped
     .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
     .replace(/\*([^*]+)\*/g, '<em>$1</em>')
     .replace(/`([^`]+)`/g, '<code class="inline-code">$1</code>')
     .replace(
-      /\[CORRECTION:\s*"([^"]+)"\s*→\s*"([^"]+)"\s*\|\s*Rule:\s*([^\]]+)\]/gi,
+      /\[CORRECTION:\s*&quot;([^&]+)&quot;\s*→\s*&quot;([^&]+)&quot;\s*\|\s*Rule:\s*([^\]]+)\]/gi,
       (_, wrong, correct, rule) =>
         `<div class="correction-box">
           <div class="corr-row">
@@ -71,6 +80,7 @@ export default function ChatInterface({
   const [streamingText, setStream]    = useState('');
   const [isListening, setIsListening] = useState(false);
   const [interimText, setInterimText] = useState('');
+  const [retryCount, setRetryCount]   = useState(0);
 
   const bottomRef      = useRef(null);
   const textareaRef    = useRef(null);
@@ -79,13 +89,20 @@ export default function ChatInterface({
 
   useEffect(() => { messagesRef.current = messages; }, [messages]);
 
+  // Read accent from localStorage for speech recognition
+  const getSpeechLang = () => {
+    const accent = localStorage.getItem('meg_voice_accent') || 'en-US';
+    const langMap = { 'en-US': 'en-US', 'en-GB': 'en-GB', 'en-AU': 'en-AU' };
+    return langMap[accent] || 'en-US';
+  };
+
   // Init SpeechRecognition
   useEffect(() => {
     if (!SpeechRecognition) return;
     const rec = new SpeechRecognition();
     rec.continuous      = false;
     rec.interimResults  = true;
-    rec.lang            = 'en-US';
+    rec.lang            = getSpeechLang();
     rec.maxAlternatives = 1;
 
     rec.onresult = (event) => {
@@ -137,6 +154,7 @@ export default function ChatInterface({
   const doSend = useCallback((text) => {
     if (!text.trim() || isStreaming) return;
     voice.stop();
+    setRetryCount(0);
 
     const userMsg      = { role: 'user', content: text };
     const nextMessages = [...messagesRef.current, userMsg];
@@ -155,6 +173,7 @@ export default function ChatInterface({
       },
       onDone: (fullText) => {
         setStream('');
+        setRetryCount(0);
         setMessages(prev => [...prev, { role: 'assistant', content: fullText }]);
         voice.speak(fullText);
 
@@ -164,14 +183,23 @@ export default function ChatInterface({
           onErrorExtracted(corrections.map(c => ({ ...c, topicId })));
         }
       },
+      onRetry: (attempt) => {
+        setRetryCount(attempt);
+        showToast(`Sunucu meşgul, tekrar deneniyor… (${attempt}/${2})`, 'warning', 2500);
+      },
       onError: (err) => {
         setStream('');
+        setRetryCount(0);
         if (err.type === 'quota_exceeded') {
           showToast('Bugünlük limit doldu, yarın devam et 🌙', 'warning', 5000);
         } else if (err.type === 'rate_limit') {
           showToast('İstek limiti aşıldı. Biraz bekleyip tekrar deneyin.', 'warning');
+        } else if (err.type === 'service_unavailable') {
+          showToast('Sunucu şu an meşgul. Lütfen birkaç saniye sonra tekrar deneyin.', 'warning', 5000);
         } else if (err.type === 'network_error') {
           showToast('Bağlantı hatası. İnternet bağlantınızı kontrol edin.', 'error');
+        } else if (err.type === 'unauthorized') {
+          showToast('Yetkilendirme hatası. Sayfayı yenileyin.', 'error');
         } else {
           showToast(`Hata: ${err.message}`, 'error');
         }
@@ -190,6 +218,11 @@ export default function ChatInterface({
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend(); }
   }
 
+  function handleInputChange(e) {
+    const val = e.target.value;
+    if (val.length <= MAX_INPUT_LENGTH) setInput(val);
+  }
+
   function toggleMic() {
     if (!SpeechRecognition) {
       showToast('Bu tarayıcıda konuşma tanıma desteklenmiyor.', 'warning', 4000);
@@ -203,6 +236,10 @@ export default function ChatInterface({
       voice.stop();
       setInput('');
       setInterimText('');
+      // Update lang in case accent changed in settings
+      if (recognitionRef.current) {
+        recognitionRef.current.lang = getSpeechLang();
+      }
       try {
         recognitionRef.current?.start();
         setIsListening(true);
@@ -223,9 +260,11 @@ export default function ChatInterface({
     setStream('');
     setInput('');
     setInterimText('');
+    setRetryCount(0);
   }
 
   const voiceSupported = !!SpeechRecognition;
+  const inputTooLong   = input.length > MAX_INPUT_LENGTH * 0.9;
 
   return (
     <div className="chat-interface">
@@ -235,6 +274,11 @@ export default function ChatInterface({
           {headerContent}
         </div>
         <div className="chat-header-actions">
+          {retryCount > 0 && (
+            <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>
+              Tekrar deneniyor…
+            </span>
+          )}
           {voice.isSpeaking && (
             <button className="btn btn-ghost btn-sm voice-indicator" onClick={voice.stop} title="Konuşmayı durdur">
               <span style={{ animation: 'pulse 0.8s ease infinite' }}>🔊</span>
@@ -324,7 +368,7 @@ export default function ChatInterface({
             ref={textareaRef}
             className="chat-textarea"
             value={isListening ? interimText : input}
-            onChange={e => !isListening && setInput(e.target.value)}
+            onChange={handleInputChange}
             onKeyDown={handleKeyDown}
             placeholder={
               isListening ? 'Dinleniyor… konuşun'
@@ -335,6 +379,15 @@ export default function ChatInterface({
             rows={1}
             readOnly={isListening}
           />
+          {inputTooLong && (
+            <span style={{
+              position: 'absolute', bottom: '100%', right: 0,
+              fontSize: 'var(--text-xs)', color: 'var(--color-warning)',
+              padding: '2px 6px',
+            }}>
+              {input.length}/{MAX_INPUT_LENGTH}
+            </span>
+          )}
           {voiceSupported && (
             <button
               className={`mic-btn ${isListening ? 'listening' : ''}`}

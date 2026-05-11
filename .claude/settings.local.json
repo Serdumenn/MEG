@@ -9,7 +9,31 @@
       "Read(//c/Users/fatih/AppData/Local/Temp/claude/C--Users-fatih-Desktop-MEG/86815708-5da1-48ad-b7f7-be5770a40701/tasks/**)",
       "Bash(npm list:*)",
       "Bash(node -e ':*)",
-      "Bash(gh repo:*)"
+      "Bash(gh repo:*)",
+      "Bash(ls -la /c/Users/fatih/Desktop/MEG/.env*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m ':*)",
+      "Bash(git push:*)",
+      "Bash(wrangler deploy:*)",
+      "Bash(curl -s -o /dev/null -w \"HTTP %{http_code}\" https://meg-gemini-proxy.fatihgamers16.workers.dev)",
+      "Bash(curl -s -w '\\\\nHTTP %{http_code}' -X POST https://meg-gemini-proxy.fatihgamers16.workers.dev -H 'Content-Type: application/json' -d '{\"model\":\"gemini-2.0-flash-lite\",\"contents\":[{\"role\":\"user\",\"parts\":[{\"text\":\"hi\"}]}],\"generationConfig\":{\"temperature\":0.7,\"maxOutputTokens\":10}}')",
+      "Bash(curl -s -w '\\\\nHTTP %{http_code}' -X OPTIONS https://meg-gemini-proxy.fatihgamers16.workers.dev -H 'Origin: https://serdumenn.github.io' -H 'Access-Control-Request-Method: POST')",
+      "Bash(curl -s -w '\\\\nHTTP %{http_code}' -X POST https://meg-gemini-proxy.fatihgamers16.workers.dev -H 'Content-Type: application/json' -H 'Origin: https://serdumenn.github.io' -d '{\"model\":\"gemini-2.0-flash-lite\",\"contents\":[{\"role\":\"user\",\"parts\":[{\"text\":\"Say hi\"}]}],\"generationConfig\":{\"temperature\":0.7,\"maxOutputTokens\":20}}')",
+      "Bash(wrangler secret:*)",
+      "Bash(curl -s -X POST https://meg-gemini-proxy.fatihgamers16.workers.dev -H 'Content-Type: application/json' -H 'Origin: https://serdumenn.github.io' -d '{\"model\":\"gemini-2.0-flash-lite\",\"contents\":[{\"role\":\"user\",\"parts\":[{\"text\":\"Say hi in one word\"}]}],\"generationConfig\":{\"temperature\":0.7,\"maxOutputTokens\":20}}')",
+      "Bash(curl -s -X POST https://meg-gemini-proxy.fatihgamers16.workers.dev -H 'Content-Type: application/json' -H 'Origin: https://serdumenn.github.io' -d '{\"model\":\"gemini-2.0-flash-lite\",\"contents\":[{\"role\":\"user\",\"parts\":[{\"text\":\"Say hi in one word\"}]}],\"generationConfig\":{\"temperature\":0.7,\"maxOutputTokens\":20}}' -w '\\\\nHTTP %{http_code}')",
+      "Bash(curl -s -o /dev/null -w 'gemini-2.0-flash: HTTP %{http_code}\\\\n' -X POST 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyDtw187_ooTnUAoD5wPgQMhchdOC1t5k-Y' -H 'Content-Type: application/json' -d '{\"contents\":[{\"role\":\"user\",\"parts\":[{\"text\":\"hi\"}]}]}')",
+      "Bash(curl -s -o /dev/null -w 'gemini-1.5-flash: HTTP %{http_code}\\\\n' -X POST 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyDtw187_ooTnUAoD5wPgQMhchdOC1t5k-Y' -H 'Content-Type: application/json' -d '{\"contents\":[{\"role\":\"user\",\"parts\":[{\"text\":\"hi\"}]}]}')",
+      "Bash(curl -s -X POST 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyDtw187_ooTnUAoD5wPgQMhchdOC1t5k-Y' -H 'Content-Type: application/json' -d '{\"contents\":[{\"role\":\"user\",\"parts\":[{\"text\":\"hi\"}]}]}')",
+      "Bash(python3 -c \"import sys,json; e=json.load\\(sys.stdin\\)['error']; print\\(e['message'][:300]\\)\")",
+      "Bash(curl -s \"https://generativelanguage.googleapis.com/v1beta/models?key=AIzaSyDtw187_ooTnUAoD5wPgQMhchdOC1t5k-Y\")",
+      "Bash(python3 -c ':*)",
+      "Bash(curl -s -o /dev/null -w 'HTTP %{http_code}' -X POST 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=AIzaSyDtw187_ooTnUAoD5wPgQMhchdOC1t5k-Y' -H 'Content-Type: application/json' -d '{\"contents\":[{\"role\":\"user\",\"parts\":[{\"text\":\"hi\"}]}]}')",
+      "Bash(curl -s -X POST 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=AIzaSyDtw187_ooTnUAoD5wPgQMhchdOC1t5k-Y' -H 'Content-Type: application/json' -d '{\"contents\":[{\"role\":\"user\",\"parts\":[{\"text\":\"hi\"}]}]}')",
+      "Bash(python3 -c \"import sys,json; e=json.load\\(sys.stdin\\).get\\('error',{}\\); print\\(e.get\\('code'\\), e.get\\('message',''\\)[:200]\\)\")",
+      "Bash(openssl rand:*)",
+      "Bash(firebase deploy:*)",
+      "Bash(firebase login:*)"
     ]
   }
 }

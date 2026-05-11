@@ -2,8 +2,9 @@ name = "meg-gemini-proxy"
 main = "index.js"
 compatibility_date = "2025-01-01"
 
-# Deploy your API key as a secret (never in this file):
+# Deploy secrets (never put real values in this file):
 #   wrangler secret put GEMINI_API_KEY
+#   wrangler secret put WORKER_TOKEN   ← generate with: openssl rand -hex 32
 #
 # Deploy the worker:
 #   wrangler deploy
